@@ -1,40 +1,48 @@
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 const projects = [
   {
-    year: '2024',
-    title: 'Formula Vintage',
-    description: 'A premium landing page and mobile app redesign for a vintage automotive brand, blending classic aesthetics with modern digital experiences.',
-    tags: ['Landing Page', 'Mobile App', 'Redesign'],
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&h=500&fit=crop',
+    year: "2024",
+    title: "Formula Vintage",
+    description:
+      "A premium landing page and mobile app redesign for a vintage automotive brand, blending classic aesthetics with modern digital experiences.",
+    tags: ["Landing Page", "Mobile App", "Redesign"],
+    image:
+      "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&h=500&fit=crop",
   },
   {
-    year: '2024',
-    title: 'Sprey Zest',
-    description: 'Complete website design and brand identity for a beverage company, focusing on vibrant visual storytelling and conversion-driven layouts.',
-    tags: ['Website Design', 'Branding'],
-    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=500&fit=crop',
+    year: "2024",
+    title: "Sprey Zest",
+    description:
+      "Complete website design and brand identity for a beverage company, focusing on vibrant visual storytelling and conversion-driven layouts.",
+    tags: ["Website Design", "Branding"],
+    image:
+      "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=500&fit=crop",
   },
   {
-    year: '2020',
-    title: 'Super Pro',
-    description: 'Cross-platform desktop and mobile application design for a productivity tool, emphasizing intuitive workflows and clean interfaces.',
-    tags: ['Desktop App', 'Mobile App'],
-    image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=500&fit=crop',
+    year: "2020",
+    title: "Super Pro",
+    description:
+      "Cross-platform desktop and mobile application design for a productivity tool, emphasizing intuitive workflows and clean interfaces.",
+    tags: ["Desktop App", "Mobile App"],
+    image:
+      "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=500&fit=crop",
   },
   {
-    year: '2024',
-    title: 'Architech Buildings',
-    description: 'End-to-end mobile app, branding, and website design for a construction tech startup, delivering a cohesive premium brand experience.',
-    tags: ['Mobile App', 'Branding', 'Website Design'],
-    image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&h=500&fit=crop',
+    year: "2024",
+    title: "Architech Buildings",
+    description:
+      "End-to-end mobile app, branding, and website design for a construction tech startup, delivering a cohesive premium brand experience.",
+    tags: ["Mobile App", "Branding", "Website Design"],
+    image:
+      "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&h=500&fit=crop",
   },
 ];
 
 function ProjectCard({ project, index }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <motion.div
@@ -84,10 +92,13 @@ function ProjectCard({ project, index }) {
 
 export default function Projects() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="projects" className="px-6 md:px-12 py-24 md:py-32 max-w-[1400px] mx-auto">
+    <section
+      id="projects"
+      className="px-6 md:px-12 py-24 md:py-32 max-w-[1400px] mx-auto"
+    >
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 20 }}
@@ -99,7 +110,6 @@ export default function Projects() {
           id="recent-projects-headline"
           className="text-[clamp(2rem,5vw,4rem)] font-bold tracking-tight"
         >
-          <span className="text-muted font-mono text-[clamp(0.875rem,1.5vw,1.125rem)] font-normal mr-3">#</span>
           Recent Projects
           <span className="text-muted">-</span>
         </h2>

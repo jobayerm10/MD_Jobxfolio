@@ -1,3 +1,4 @@
+import SmoothScroll from './components/SmoothScroll';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Intro from './components/Intro';
@@ -8,15 +9,23 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="bg-dark min-h-screen text-white overflow-x-hidden">
-      <Navbar />
-      <Hero />
-      <Intro />
-      <Services />
-      <Projects />
-      <Testimonials />
-      <Footer />
-    </div>
+    <SmoothScroll>
+      <div className="bg-dark min-h-screen text-white overflow-x-hidden">
+        <Navbar />
+        <div className="relative">
+          <Hero />
+          <Intro />
+        </div>
+        <div className="relative">
+          <Services />
+          <div className="relative z-10">
+            <Projects />
+            <Testimonials />
+            <Footer />
+          </div>
+        </div>
+      </div>
+    </SmoothScroll>
   );
 }
 

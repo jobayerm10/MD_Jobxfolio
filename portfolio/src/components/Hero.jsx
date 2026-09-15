@@ -3,7 +3,7 @@ import image from "../assets/hero.png";
 
 export default function Hero() {
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-[#E8E4E0]">
+    <section className="sticky top-0 h-screen w-full overflow-hidden bg-[#E8E4E0] z-0">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
@@ -14,7 +14,7 @@ export default function Hero() {
         <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
       </div>
 
-      {/* Giant Name Text — overlapping the image */}
+      {/* Giant Name Text */}
       <div className="absolute inset-0 flex items-center justify-start px-6 md:px-12 pointer-events-none">
         <motion.h1
           initial={{ opacity: 0, x: -60 }}
@@ -22,8 +22,7 @@ export default function Hero() {
           transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="text-[clamp(4rem,14vw,12rem)] font-black leading-none tracking-tighter text-black/80 select-none whitespace-nowrap"
         >
-          {/* Jobayer Mahmud */}
-          <span className="text-black/50">-</span>
+          Jobayer Mahmud
         </motion.h1>
       </div>
 
@@ -63,7 +62,7 @@ export default function Hero() {
           <a
             key={social.label}
             href="#"
-            className="flex items-center gap-2 lg:text-black sm:text-white text-md font-bold tracking-wide hover:text-white transition-colors duration-300 group"
+            className="flex items-center gap-2 text-black text-md font-bold tracking-wide hover:text-white transition-colors duration-300 group"
           >
             <span className="opacity-70 group-hover:opacity-100 transition-opacity">
               {social.icon}
@@ -80,11 +79,11 @@ export default function Hero() {
         transition={{ duration: 0.8, delay: 0.8 }}
         className="absolute bottom-8 right-6 md:right-12 text-right z-10"
       >
-        <h2 className="text-6xl font-bold lg:text-black/90 sm:text-white  leading-tighter tracking-tighter">
+        <h2 className="text-6xl font-bold text-black/90 leading-tighter tracking-tighter">
           Web Developer
         </h2>
-        <h2 className="text-6xl font-bold lg:text-black/90 sm:text-white  leading-tighter tracking-tighter">
-          UI Enthusiast
+        <h2 className="text-6xl font-bold text-black/90 leading-tighter tracking-tighter">
+          & UI Enthusiast
         </h2>
       </motion.div>
     </section>

@@ -1,14 +1,17 @@
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
-const socialLinks = ['Linkedin', 'Twitter', 'Instagram', 'Dribbble'];
+const socialLinks = ["Linkedin", "Twitter", "Instagram", "Dribbble"];
 
 export default function Footer() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <footer id="contact" className="px-6 md:px-12 py-24 md:py-32 max-w-[1400px] mx-auto border-t border-border">
+    <footer
+      id="contact"
+      className="px-6 md:px-12 py-24 md:py-32 max-w-[1400px] mx-auto border-t border-border"
+    >
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 40 }}
@@ -17,7 +20,6 @@ export default function Footer() {
       >
         {/* Header */}
         <h2 className="text-[clamp(2.5rem,7vw,6rem)] font-bold tracking-tight leading-[0.95] mb-16">
-          <span className="text-muted font-mono text-[clamp(0.875rem,1.5vw,1.125rem)] font-normal mr-3">#</span>
           Reach Out
           <span className="text-muted">-</span>
         </h2>
@@ -26,15 +28,21 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 mb-20">
           {/* Office */}
           <div className="border border-border p-8 group hover:border-muted/50 transition-colors duration-500">
-            <span className="text-muted text-xs tracking-widest uppercase block mb-4">Office</span>
+            <span className="text-muted text-xs tracking-widest uppercase block mb-4">
+              Office
+            </span>
             <p className="text-white text-lg leading-relaxed">
-              Rajshahi,<br />Bangladesh
+              Rajshahi,
+              <br />
+              Bangladesh
             </p>
           </div>
 
           {/* Mail */}
           <div className="border border-border p-8 group hover:border-muted/50 transition-colors duration-500">
-            <span className="text-muted text-xs tracking-widest uppercase block mb-4">Mail</span>
+            <span className="text-muted text-xs tracking-widest uppercase block mb-4">
+              Mail
+            </span>
             <a
               href="mailto:jobayermahmud976@gmail.com"
               className="text-white text-lg leading-relaxed hover:text-muted transition-colors duration-300 break-all"
@@ -45,7 +53,9 @@ export default function Footer() {
 
           {/* Phone */}
           <div className="border border-border p-8 group hover:border-muted/50 transition-colors duration-500">
-            <span className="text-muted text-xs tracking-widest uppercase block mb-4">Phone</span>
+            <span className="text-muted text-xs tracking-widest uppercase block mb-4">
+              Phone
+            </span>
             <a
               href="tel:+8801723180690"
               className="text-white text-lg leading-relaxed hover:text-muted transition-colors duration-300"
@@ -71,7 +81,7 @@ export default function Footer() {
           </div>
 
           <p className="text-muted text-xs tracking-wider">
-            © 2024 Jobayer Mahmud. All Rights Reserved.
+            © 2026 Jobayer Mahmud. All Rights Reserved.
           </p>
         </div>
       </motion.div>

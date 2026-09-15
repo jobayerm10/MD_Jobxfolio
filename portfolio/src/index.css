@@ -7,13 +7,31 @@
   --color-border: #262626;
   --color-surface: #0a0a0a;
   --color-accent: #1a1a1a;
+  --color-orange: #E85D26;
   --font-sans: "Inter", system-ui, sans-serif;
   --font-display: "Inter Display", "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "DM Mono", monospace;
 }
 
-html {
-  scroll-behavior: smooth;
+html.lenis, html.lenis body {
+  height: auto;
+  will-change: scroll-position;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent="false"] {
+  overscroll-behavior: contain;
 }
 
 body {

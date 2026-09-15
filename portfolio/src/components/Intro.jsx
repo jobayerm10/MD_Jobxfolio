@@ -1,44 +1,160 @@
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { useRef, useState } from "react";
 
-export default function Intro() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+function AnimatedButton() {
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <section className="bg-dark px-6 md:px-12 py-24 md:py-32 max-w-[1400px] mx-auto border-t border-border">
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8 }}
-        className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-12"
-      >
-        {/* Left: Intro Text */}
-        <p className="text-muted text-sm md:text-base leading-relaxed tracking-widest max-w-2xl uppercase">
-          I'm a versatile designer who partners with founders to turn ideas into real products.
-          I focus on clear interfaces, sharp decisions, and fast execution.
-        </p>
+    <a
+      href="#projects"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="relative inline-flex items-center justify-center overflow-hidden border border-border rounded-full px-10 py-4 cursor-pointer group"
+    >
+      {/* Orange background fill */}
+      <motion.span
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: isHovered ? 1 : 0 }}
+        transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="absolute inset-0 bg-orange origin-left"
+      />
 
-        {/* Right: CTA */}
-        <a
-          href="#projects"
-          className="group flex items-center gap-3 text-white text-sm tracking-widest hover:gap-5 transition-all duration-300 shrink-0"
+      {/* Text */}
+      <motion.span
+        animate={{
+          y: isHovered ? -30 : 0,
+          opacity: isHovered ? 0 : 1,
+        }}
+        transition={{ duration: 0.3 }}
+        className="relative z-10 text-white text-sm tracking-widest"
+      >
+        See my Work
+      </motion.span>
+
+      {/* Hover text slides up */}
+      <motion.span
+        initial={{ y: 30, opacity: 0 }}
+        animate={{
+          y: isHovered ? 0 : 30,
+          opacity: isHovered ? 1 : 0,
+        }}
+        transition={{ duration: 0.3 }}
+        className="absolute z-10 text-black text-sm tracking-widest font-medium"
+      >
+        See my Work
+      </motion.span>
+
+      {/* Arrow icon */}
+      <motion.span
+        animate={{
+          x: isHovered ? 0 : -10,
+          opacity: isHovered ? 1 : 0,
+        }}
+        transition={{ duration: 0.3, delay: 0.1 }}
+        className="absolute right-8 z-10 text-black"
+      >
+        <svg
+          className="w-4 h-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
         >
-          See my Work
-          <span className="inline-flex items-center justify-center w-10 h-10 border border-border rounded-full group-hover:bg-white group-hover:text-black transition-all duration-300">
-            <svg
-              className="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform duration-300"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M17 8l4 4m0 0l-4 4m4-4H3"
+          />
+        </svg>
+      </motion.span>
+    </a>
+  );
+}
+
+export default function Intro() {
+  const sectionRef = useRef(null);
+  const textRef = useRef(null);
+  const isInView = useInView(textRef, { once: false, margin: "-20%" });
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.2, 0.8, 1],
+    [0, 1, 1, 0.5],
+  );
+
+  const words = [
+    { text: "I'm a versat", highlight: false },
+    { text: "ile designer who", highlight: false },
+    {
+      text: " partners with founders to turn ideas into real products",
+      highlight: true,
+    },
+    {
+      text: ". I focus on clear interfaces, sharp decisions, and fast execution.",
+      highlight: false,
+    },
+  ];
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative bg-dark min-h-screen flex flex-col justify-center z-10"
+    >
+      <div className="max-w-[1400px] mx-auto w-full px-6 md:px-12 py-32">
+        {/* Section Label */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={isInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="mb-16"
+        >
+          <span className="text-orange font-mono text-sm tracking-widest">
+            // Intro
           </span>
-        </a>
-      </motion.div>
+        </motion.div>
+
+        {/* Main Text */}
+        <motion.div ref={textRef} style={{ y, opacity }} className="max-w-5xl">
+          <h2 className="text-[clamp(2rem,5.5vw,4.5rem)] font-bold leading-[1.1] tracking-tight">
+            {words.map((word, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 40 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                className={word.highlight ? "text-orange" : "text-white"}
+              >
+                {word.text}
+              </motion.span>
+            ))}
+          </h2>
+        </motion.div>
+
+        {/* Subtitle + CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="mt-16 flex flex-col items-start gap-10 max-w-xl ml-auto"
+        >
+          <p className="text-muted text-sm leading-relaxed tracking-wide">
+            Bringing your vision to life quickly and efficiently—whether it's
+            branding, apps, or websites—I've got it covered, delivering smooth
+            and effective solutions from start to finish.
+          </p>
+
+          <AnimatedButton />
+        </motion.div>
+      </div>
+
+      {/* Bottom Divider with Section Label */}
+      <div className="border-t border-border mt-16 px-6 md:px-12 py-4"></div>
     </section>
   );
 }
