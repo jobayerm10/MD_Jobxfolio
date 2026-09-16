@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
 function AnimatedButton() {
@@ -11,7 +11,6 @@ function AnimatedButton() {
       onMouseLeave={() => setIsHovered(false)}
       className="relative inline-flex items-center justify-center overflow-hidden border border-border rounded-full px-10 py-4 cursor-pointer group"
     >
-      {/* Orange background fill */}
       <motion.span
         initial={{ scaleX: 0 }}
         animate={{ scaleX: isHovered ? 1 : 0 }}
@@ -19,52 +18,30 @@ function AnimatedButton() {
         className="absolute inset-0 bg-orange origin-left"
       />
 
-      {/* Text */}
       <motion.span
-        animate={{
-          y: isHovered ? -30 : 0,
-          opacity: isHovered ? 0 : 1,
-        }}
+        animate={{ y: isHovered ? -30 : 0, opacity: isHovered ? 0 : 1 }}
         transition={{ duration: 0.3 }}
         className="relative z-10 text-white text-sm tracking-widest"
       >
         See my Work
       </motion.span>
 
-      {/* Hover text slides up */}
       <motion.span
         initial={{ y: 30, opacity: 0 }}
-        animate={{
-          y: isHovered ? 0 : 30,
-          opacity: isHovered ? 1 : 0,
-        }}
+        animate={{ y: isHovered ? 0 : 30, opacity: isHovered ? 1 : 0 }}
         transition={{ duration: 0.3 }}
         className="absolute z-10 text-black text-sm tracking-widest font-medium"
       >
         See my Work
       </motion.span>
 
-      {/* Arrow icon */}
       <motion.span
-        animate={{
-          x: isHovered ? 0 : -10,
-          opacity: isHovered ? 1 : 0,
-        }}
+        animate={{ x: isHovered ? 0 : -10, opacity: isHovered ? 1 : 0 }}
         transition={{ duration: 0.3, delay: 0.1 }}
         className="absolute right-8 z-10 text-black"
       >
-        <svg
-          className="w-4 h-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M17 8l4 4m0 0l-4 4m4-4H3"
-          />
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
         </svg>
       </motion.span>
     </a>
@@ -72,40 +49,18 @@ function AnimatedButton() {
 }
 
 export default function Intro() {
-  const sectionRef = useRef(null);
   const textRef = useRef(null);
-  const isInView = useInView(textRef, { once: false, margin: "-20%" });
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 0.2, 0.8, 1],
-    [0, 1, 1, 0.5],
-  );
+  const isInView = useInView(textRef, { once: true, margin: "-10%" });
 
   const words = [
     { text: "I'm a versat", highlight: false },
     { text: "ile designer who", highlight: false },
-    {
-      text: " partners with founders to turn ideas into real products",
-      highlight: true,
-    },
-    {
-      text: ". I focus on clear interfaces, sharp decisions, and fast execution.",
-      highlight: false,
-    },
+    { text: " partners with founders to turn ideas into real products", highlight: true },
+    { text: ". I focus on clear interfaces, sharp decisions, and fast execution.", highlight: false },
   ];
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative bg-dark min-h-screen flex flex-col justify-center z-10"
-    >
+    <section className="relative bg-dark min-h-screen flex flex-col justify-center z-10">
       <div className="max-w-[1400px] mx-auto w-full px-6 md:px-12 py-32">
         {/* Section Label */}
         <motion.div
@@ -120,7 +75,7 @@ export default function Intro() {
         </motion.div>
 
         {/* Main Text */}
-        <motion.div ref={textRef} style={{ y, opacity }} className="max-w-5xl">
+        <div ref={textRef} className="max-w-5xl">
           <h2 className="text-[clamp(2rem,5.5vw,4.5rem)] font-bold leading-[1.1] tracking-tight">
             {words.map((word, i) => (
               <motion.span
@@ -134,7 +89,7 @@ export default function Intro() {
               </motion.span>
             ))}
           </h2>
-        </motion.div>
+        </div>
 
         {/* Subtitle + CTA */}
         <motion.div
@@ -152,9 +107,6 @@ export default function Intro() {
           <AnimatedButton />
         </motion.div>
       </div>
-
-      {/* Bottom Divider with Section Label */}
-      <div className="border-t border-border mt-16 px-6 md:px-12 py-4"></div>
     </section>
   );
 }

@@ -20,8 +20,10 @@ function App() {
           <Services />
           <div className="relative z-10">
             <Projects />
-            <Testimonials />
-            <Footer />
+            <div className="relative z-10">
+              <Testimonials />
+              <Footer />
+            </div>
           </div>
         </div>
       </div>

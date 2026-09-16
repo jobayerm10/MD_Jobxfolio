@@ -1,34 +1,33 @@
 import { useEffect, useRef } from "react";
-import Lenis from "lenis";
+import LocomotiveScroll from "locomotive-scroll";
+import "locomotive-scroll/dist/locomotive-scroll.css";
 
 export default function SmoothScroll({ children }) {
-  const lenisRef = useRef(null);
+  const locomotiveRef = useRef(null);
 
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 2.8,
-      easing: (t) => {
-        return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    const locoScroll = new LocomotiveScroll({
+      lenisOptions: {
+        duration: 2.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: "vertical",
+        gestureOrientation: "vertical",
+        smoothWheel: true,
+        wheelMultiplier: 0.6,
+        touchMultiplier: 1.5,
       },
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-      wheelMultiplier: 0.6,
-      touchMultiplier: 1.5,
-      infinite: false,
+      autoStart: true,
     });
 
-    lenisRef.current = lenis;
+    locomotiveRef.current = locoScroll;
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
+    const timer = setTimeout(() => {
+      locoScroll.resize();
+    }, 500);
 
     return () => {
-      lenis.destroy();
+      clearTimeout(timer);
+      locoScroll.destroy();
     };
   }, []);
 

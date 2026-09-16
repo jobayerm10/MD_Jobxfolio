@@ -1,7 +1,10 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import image from "../assets/hero.png";
 
 export default function Hero() {
+  const { scrollYProgress } = useScroll();
+  const textX = useTransform(scrollYProgress, [0, 0.3], ["0%", "-40%"]);
+
   return (
     <section className="sticky top-0 h-screen w-full overflow-hidden bg-[#E8E4E0] z-0">
       {/* Background Image */}
@@ -14,16 +17,13 @@ export default function Hero() {
         <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
       </div>
 
-      {/* Giant Name Text */}
-      <div className="absolute inset-0 flex items-center justify-start px-6 md:px-12 pointer-events-none">
-        <motion.h1
-          initial={{ opacity: 0, x: -60 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="text-[clamp(4rem,14vw,12rem)] font-black leading-none tracking-tighter text-black/80 select-none whitespace-nowrap"
-        >
-          Jobayer Mahmud
-        </motion.h1>
+      {/* Giant Marquee Text */}
+      <div className="absolute inset-0 flex items-center pointer-events-none overflow-hidden mt-[20%]">
+        <motion.div style={{ x: textX }} className="whitespace-nowrap">
+          <h2 className="text-[clamp(4rem,14vw,12rem)] font-black leading-none tracking-tighter text-black/80 select-none">
+            Jobayer Mahmud - Jobayer Mahmud - Jobayer Mahmud -
+          </h2>
+        </motion.div>
       </div>
 
       {/* Bottom Left — Social Links */}

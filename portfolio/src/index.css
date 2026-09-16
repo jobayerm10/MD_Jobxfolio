@@ -13,25 +13,64 @@
   --font-mono: "JetBrains Mono", "DM Mono", monospace;
 }
 
-html.lenis, html.lenis body {
-  height: auto;
-  will-change: scroll-position;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
+/* ── Locomotive Scroll Base ── */
+html.has-scroll-smooth {
   overflow: hidden;
 }
 
-.lenis.lenis-smooth [data-lenis-prevent="false"] {
-  overscroll-behavior: contain;
+html.has-scroll-smooth body {
+  overflow: hidden;
+}
+
+[data-scroll-container] {
+  min-height: 100vh;
+}
+
+/* Hide scrollbar */
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.scroll-snap-start { scroll-snap-align: start; }
+
+/* ── Locomotive Scroll Parallax & Reveal Classes ── */
+[data-scroll] {
+  transition: none !important;
+}
+
+[data-scroll="true"] {
+  will-change: transform;
+}
+
+[data-scroll-speed] {
+  will-change: transform;
+}
+
+[data-scroll-call] {
+  will-change: transform, opacity;
+}
+
+/* Scroll reveal animations */
+[data-scroll].is-revealed {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+[data-scroll].is-hidden {
+  opacity: 0 !important;
+  transform: translateY(40px) !important;
+}
+
+/* Parallax speed classes */
+[data-scroll-speed="-2"] { transform: translateY(0); }
+[data-scroll-speed="-1"] { transform: translateY(0); }
+[data-scroll-speed="1"]  { transform: translateY(0); }
+[data-scroll-speed="2"]  { transform: translateY(0); }
+[data-scroll-speed="3"]  { transform: translateY(0); }
+
+/* Horizontal scroll items */
+[data-scroll-direction="horizontal"] [data-scroll] {
+  will-change: transform;
 }
 
 body {
