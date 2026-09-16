@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
 
 function AnimatedButton() {
@@ -40,33 +40,77 @@ function AnimatedButton() {
         transition={{ duration: 0.3, delay: 0.1 }}
         className="absolute right-8 z-10 text-black"
       >
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        <svg
+          className="w-4 h-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M17 8l4 4m0 0l-4 4m4-4H3"
+          />
         </svg>
       </motion.span>
     </a>
   );
 }
 
-export default function Intro() {
-  const textRef = useRef(null);
-  const isInView = useInView(textRef, { once: true, margin: "-10%" });
-
-  const words = [
-    { text: "I'm a versat", highlight: false },
-    { text: "ile designer who", highlight: false },
-    { text: " partners with founders to turn ideas into real products", highlight: true },
-    { text: ". I focus on clear interfaces, sharp decisions, and fast execution.", highlight: false },
-  ];
+function AnimatedWord({ word, index, totalWords, scrollYProgress }) {
+  const start = 0.12 + (index / totalWords) * 0.42;
+  const end = start + 0.06;
+  const color = useTransform(
+    scrollYProgress,
+    [start, end],
+    ["#242223", word.highlight ? "#f97316" : "#ffffff"],
+  );
+  const y = useTransform(scrollYProgress, [start, end], [8, 0]);
 
   return (
-    <section className="relative bg-dark min-h-screen flex flex-col justify-center z-10">
-      <div className="max-w-[1400px] mx-auto w-full px-6 md:px-12 py-32">
+    <motion.span style={{ color, y }} className="inline-block whitespace-pre">
+      {word.text}
+    </motion.span>
+  );
+}
+
+export default function Intro() {
+  const sectionRef = useRef(null);
+  const textRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const labelOpacity = useTransform(scrollYProgress, [0.1, 0.3], [0, 1]);
+  const labelX = useTransform(scrollYProgress, [0.1, 0.3], [-20, 0]);
+  const contentOpacity = useTransform(scrollYProgress, [0.55, 0.75], [0, 1]);
+  const contentY = useTransform(scrollYProgress, [0.55, 0.75], [30, 0]);
+  const textParts = [
+    { text: "I'm a versat", highlight: false },
+    { text: "ile designer who", highlight: false },
+    {
+      text: " partners with founders to turn ideas into real products",
+      highlight: true,
+    },
+    {
+      text: ". I focus on clear interfaces, sharp decisions, and fast execution.",
+      highlight: false,
+    },
+  ];
+  const words = textParts.flatMap(({ text, highlight }) =>
+    text.split(/(\s+)/).map((word) => ({ text: word, highlight })),
+  );
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative bg-dark min-h-screen flex flex-col justify-center z-10"
+    >
+      <div className="max-w-350 mx-auto w-full px-6 md:px-12 py-32">
         {/* Section Label */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={isInView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          style={{ opacity: labelOpacity, x: labelX }}
           className="mb-16"
         >
           <span className="text-orange font-mono text-sm tracking-widest">
@@ -76,26 +120,22 @@ export default function Intro() {
 
         {/* Main Text */}
         <div ref={textRef} className="max-w-5xl">
-          <h2 className="text-[clamp(2rem,5.5vw,4.5rem)] font-bold leading-[1.1] tracking-tight">
+          <h2 className="relative text-[clamp(2rem,5.5vw,4.5rem)] font-bold leading-[1.1] tracking-tight">
             {words.map((word, i) => (
-              <motion.span
+              <AnimatedWord
                 key={i}
-                initial={{ opacity: 0, y: 40 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                className={word.highlight ? "text-orange" : "text-white"}
-              >
-                {word.text}
-              </motion.span>
+                word={word}
+                index={i}
+                totalWords={words.length}
+                scrollYProgress={scrollYProgress}
+              />
             ))}
           </h2>
         </div>
 
         {/* Subtitle + CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.5 }}
+          style={{ opacity: contentOpacity, y: contentY }}
           className="mt-16 flex flex-col items-start gap-10 max-w-xl ml-auto"
         >
           <p className="text-muted text-sm leading-relaxed tracking-wide">
