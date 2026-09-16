@@ -1,9 +1,11 @@
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useState } from "react";
 import image from "../assets/hero5.png";
 
 export default function Hero() {
   const { scrollYProgress } = useScroll();
   const textX = useTransform(scrollYProgress, [0, 0.3], ["0%", "-40%"]);
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
   return (
     <section className="sticky top-0 h-screen w-full overflow-hidden bg-[#E8E4E0] z-0">
@@ -18,15 +20,31 @@ export default function Hero() {
       </div>
 
       {/* Giant Marquee Text */}
-      <div className="absolute inset-0 flex items-center pointer-events-none overflow-hidden mt-[20%]">
-        <motion.div
+      <div className="absolute inset-0 flex items-center overflow-hidden mt-[20%]">
+        <motion.a
           style={{ x: textX, mixBlendMode: "difference", color: "#fff" }}
-          className="whitespace-nowrap"
+          className="group relative whitespace-nowrap cursor-pointer"
+          href="https://cdn.jsdelivr.net/gh/jobayerm10/Jobayer-Mahmud-Resume@main/Jobayer_mahmud-resume.pdf?download=1"
+          target="_blank"
+          rel="noreferrer"
+          onMouseMove={(event) => {
+            const bounds = event.currentTarget.getBoundingClientRect();
+            setCursorPosition({
+              x: event.clientX - bounds.left,
+              y: event.clientY - bounds.top,
+            });
+          }}
         >
           <h2 className="text-[24vw] lg:text-[10vw] font-semibold lg:font-black  leading-none tracking-tighter text-white select-none">
             Jobayer Mahmud - Jobayer Mahmud - Jobayer Mahmud -
           </h2>
-        </motion.div>
+          <span
+            style={{ left: cursorPosition.x, top: cursorPosition.y }}
+            className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-white px-5 py-3 text-sm font-bold uppercase tracking-wider text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          >
+            View Resume
+          </span>
+        </motion.a>
       </div>
 
       {/* Bottom Left — Social Links */}
