@@ -34,7 +34,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.6 }}
-        className="absolute bottom-8 right-6 md:left-12 md:right-auto flex flex-col gap-3 z-10"
+        className="absolute bottom-20 right-6 md:bottom-8 md:left-12 md:right-auto flex flex-col gap-3 z-10"
       >
         {[
           {
@@ -87,7 +87,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.8 }}
-        className="absolute bottom-8 left-3 text-left z-10 md:left-auto md:right-6 md:text-right lg:right-12"
+        className="absolute bottom-20 left-3 text-left z-10 md:bottom-8 md:left-auto md:right-6 md:text-right lg:right-12"
       >
         <h2 className="text-2xl font-bold text-white/70 leading-tighter tracking-tighter md:text-6xl md:text-black/75">
           Web Developer
