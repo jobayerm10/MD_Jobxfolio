@@ -70,12 +70,14 @@ export default function Hero() {
             href={social.href}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-2 text-white text-md font-bold tracking-wide hover:text-white transition-colors duration-300 group"
+            className="flex items-center gap-2 text-white md:text-black text-md font-bold tracking-wide hover:text-white md:hover:text-black transition-colors duration-300 group"
           >
             <span className="opacity-70 group-hover:opacity-100 transition-opacity">
               {social.icon}
             </span>
-            <span className="hidden md:inline">{social.label}</span>
+            <span className="hidden md:inline md:text-black">
+              {social.label}
+            </span>
           </a>
         ))}
       </motion.div>
