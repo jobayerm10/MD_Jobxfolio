@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef } from "react";
-import image from "../assets/hero.png";
+import image from "../assets/footer.png";
 
 const socialLinks = [
   {
@@ -93,7 +93,7 @@ export default function Footer() {
           style={{ x: textX }}
           className="whitespace-nowrap"
         >
-          <h2 className="text-[clamp(4rem,14vw,12rem)] font-black leading-none tracking-tighter text-black/80 select-none">
+          <h2 className="text-[clamp(4rem,14vw,12rem)] font-black leading-none tracking-tighter text-white/40 select-none">
             Reach Out - Reach Out - Reach Out -
           </h2>
         </motion.div>
