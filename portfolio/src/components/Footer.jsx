@@ -90,13 +90,12 @@ export default function Footer() {
       </motion.button>
 
       {/* Giant Marquee Text */}
-      <div className="absolute inset-0 flex items-center pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 flex items-center pointer-events-none overflow-hidden mt-[20%]">
         <motion.div
-          ref={textRef}
-          style={{ x: textX }}
+          style={{ x: textX, mixBlendMode: "difference", color: "#fff" }}
           className="whitespace-nowrap"
         >
-          <h2 className="text-[clamp(4rem,14vw,12rem)] font-black leading-none tracking-tighter text-white/40 select-none">
+          <h2 className="text-[clamp(3rem,12vw,10rem)] font-black leading-none tracking-tighter text-white select-none">
             Reach Out - Reach Out - Reach Out -
           </h2>
         </motion.div>

@@ -19,8 +19,11 @@ export default function Hero() {
 
       {/* Giant Marquee Text */}
       <div className="absolute inset-0 flex items-center pointer-events-none overflow-hidden mt-[20%]">
-        <motion.div style={{ x: textX }} className="whitespace-nowrap">
-          <h2 className="text-[clamp(4rem,14vw,12rem)] font-black leading-none tracking-tighter text-white/40 select-none">
+        <motion.div
+          style={{ x: textX, mixBlendMode: "difference", color: "#fff" }}
+          className="whitespace-nowrap"
+        >
+          <h2 className="text-[clamp(2rem,12vw,10rem)] font-black leading-none tracking-tighter text-white select-none">
             Jobayer Mahmud - Jobayer Mahmud - Jobayer Mahmud -
           </h2>
         </motion.div>
