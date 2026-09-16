@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValueEvent,
+  useScroll,
+} from "framer-motion";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,10 +36,10 @@ export default function Navbar() {
             transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="fixed top-0 left-0 right-0 z-50 bg-transparent"
           >
-            <div className="max-w-full mx-auto px-6 md:px-12 flex items-center justify-between h-20">
+            <div className="max-w-full mx-auto px-3 md:px-12 flex items-center justify-between h-20">
               {/* Left: Brand */}
               <div className="flex flex-col">
-                <span className="font-extrabold text-xl tracking-tighter text-black/80">
+                <span className="lg:font-extrabold sm:font-light lg:text-xl sm:text-sm tracking-tighter text-black/80">
                   © Jobayer Design & Technology
                 </span>
               </div>
@@ -76,7 +81,9 @@ export default function Navbar() {
                   className="block w-6 h-px bg-black"
                 />
                 <motion.span
-                  animate={isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+                  animate={
+                    isOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }
+                  }
                   className="block w-6 h-px bg-black origin-center"
                 />
               </button>

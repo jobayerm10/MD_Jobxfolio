@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import image from "../assets/hero.png";
+import image from "../assets/hero5.png";
 
 export default function Hero() {
   const { scrollYProgress } = useScroll();
@@ -20,7 +20,7 @@ export default function Hero() {
       {/* Giant Marquee Text */}
       <div className="absolute inset-0 flex items-center pointer-events-none overflow-hidden mt-[20%]">
         <motion.div style={{ x: textX }} className="whitespace-nowrap">
-          <h2 className="text-[clamp(4rem,14vw,12rem)] font-black leading-none tracking-tighter text-black/80 select-none">
+          <h2 className="text-[clamp(4rem,14vw,12rem)] font-black leading-none tracking-tighter text-white/40 select-none">
             Jobayer Mahmud - Jobayer Mahmud - Jobayer Mahmud -
           </h2>
         </motion.div>
@@ -62,7 +62,7 @@ export default function Hero() {
           <a
             key={social.label}
             href="#"
-            className="flex items-center gap-2 text-black text-md font-bold tracking-wide hover:text-white transition-colors duration-300 group"
+            className="flex items-center gap-2 text-black/80 text-md font-bold tracking-wide hover:text-white transition-colors duration-300 group"
           >
             <span className="opacity-70 group-hover:opacity-100 transition-opacity">
               {social.icon}
@@ -79,10 +79,10 @@ export default function Hero() {
         transition={{ duration: 0.8, delay: 0.8 }}
         className="absolute bottom-8 right-6 md:right-12 text-right z-10"
       >
-        <h2 className="text-6xl font-bold text-black/90 leading-tighter tracking-tighter">
+        <h2 className="text-6xl font-bold text-black/75 leading-tighter tracking-tighter">
           Web Developer
         </h2>
-        <h2 className="text-6xl font-bold text-black/90 leading-tighter tracking-tighter">
+        <h2 className="text-6xl font-bold text-black/75 leading-tighter tracking-tighter">
           & UI Enthusiast
         </h2>
       </motion.div>
