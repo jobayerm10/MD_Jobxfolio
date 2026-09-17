@@ -67,15 +67,10 @@ export default function Intro() {
   const contentOpacity = useTransform(scrollYProgress, [0.55, 0.75], [0, 1]);
   const contentY = useTransform(scrollYProgress, [0.55, 0.75], [30, 0]);
   const textParts = [
-    { text: "I'm a versat", highlight: false },
-    { text: "ile designer who", highlight: false },
+    { text: "As a Web developer, I create custom web solutions", highlight: false },
     {
-      text: " partners with founders to turn ideas into real products",
+      text: " that solve real business problems, strengthen your online visibility, and drive measurable growth.",
       highlight: true,
-    },
-    {
-      text: ". I focus on clear interfaces, sharp decisions, and fast execution.",
-      highlight: false,
     },
   ];
   const words = textParts.flatMap(({ text, highlight }) =>
