@@ -8,6 +8,7 @@ import {
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const [visible, setVisible] = useState(true);
   const { scrollY } = useScroll();
 
@@ -56,14 +57,45 @@ export default function Navbar() {
                     <span className="absolute -bottom-1 left-0 w-0 h-px bg-black transition-all duration-300 group-hover:w-full" />
                   </a>
                 ))}
-                <a
+                <motion.a
                   target="_blank"
                   rel="noopener noreferrer"
                   href="mailto:jobayermahmud976@gmail.com"
-                  className="hidden lg:inline-block text-sm px-6 py-3 border-2 border-black rounded-md bg-black/85 text-white transition-all duration-300 ease-out hover:px-9 shadow-md hover:shadow-lg"
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                  className="relative hidden lg:inline-flex items-center justify-center overflow-hidden border-3 border-accent bg-accent rounded-xl px-6 py-3 cursor-pointer group"
                 >
-                  @jobayer
-                </a>
+                  <motion.span
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: isHovered ? 1 : 0 }}
+                    transition={{
+                      duration: 0.4,
+                      ease: [0.25, 0.46, 0.45, 0.94],
+                    }}
+                    className="absolute inset-0 bg-[#B5E550] origin-left"
+                  />
+                  <motion.span
+                    animate={{
+                      y: isHovered ? -30 : 0,
+                      opacity: isHovered ? 0 : 1,
+                    }}
+                    transition={{ duration: 0.3 }}
+                    className="relative z-10 text-white text-sm tracking-widest"
+                  >
+                    @jobayer
+                  </motion.span>
+                  <motion.span
+                    initial={{ y: 30, opacity: 0 }}
+                    animate={{
+                      y: isHovered ? 0 : 30,
+                      opacity: isHovered ? 1 : 0,
+                    }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute z-10 text-black text-sm tracking-widest font-medium"
+                  >
+                    @jobayer
+                  </motion.span>
+                </motion.a>
               </div>
 
               {/* Mobile Burger */}

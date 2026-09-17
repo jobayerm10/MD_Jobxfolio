@@ -9,13 +9,13 @@ function AnimatedButton() {
       href="#projects"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative inline-flex items-center justify-center overflow-hidden border border-border rounded-full px-10 py-4 cursor-pointer group"
+      className="relative inline-flex items-center justify-center overflow-hidden border border-border rounded-xl px-10 py-4 cursor-pointer group"
     >
       <motion.span
         initial={{ scaleX: 0 }}
         animate={{ scaleX: isHovered ? 1 : 0 }}
         transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="absolute inset-0 bg-orange origin-left"
+        className="absolute inset-0 bg-[#B5E550] origin-left"
       />
 
       <motion.span
@@ -34,26 +34,6 @@ function AnimatedButton() {
       >
         See my Work
       </motion.span>
-
-      <motion.span
-        animate={{ x: isHovered ? 0 : -10, opacity: isHovered ? 1 : 0 }}
-        transition={{ duration: 0.3, delay: 0.1 }}
-        className="absolute right-8 z-10 text-black"
-      >
-        <svg
-          className="w-4 h-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M17 8l4 4m0 0l-4 4m4-4H3"
-          />
-        </svg>
-      </motion.span>
     </a>
   );
 }
@@ -64,7 +44,7 @@ function AnimatedWord({ word, index, totalWords, scrollYProgress }) {
   const color = useTransform(
     scrollYProgress,
     [start, end],
-    ["#242223", word.highlight ? "#f97316" : "#ffffff"],
+    ["#242223", word.highlight ? "#B5E550" : "#ffffff"],
   );
   const y = useTransform(scrollYProgress, [start, end], [8, 0]);
 
@@ -113,7 +93,7 @@ export default function Intro() {
           style={{ opacity: labelOpacity, x: labelX }}
           className="mb-16"
         >
-          <span className="text-orange font-mono text-sm tracking-widest">
+          <span className="text-[#B5E550] font-mono text-sm tracking-widest">
             // Intro
           </span>
         </motion.div>
