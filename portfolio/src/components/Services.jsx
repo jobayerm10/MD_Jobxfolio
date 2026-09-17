@@ -1,52 +1,56 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const services = [
   {
-    number: '01',
-    title: 'Branding & Marketing',
-    description: 'Branding that builds trust and drives loyalty through clear visuals and messaging, into an unforgettable online experience.',
+    number: "01",
+    title: "Branding & Marketing",
+    description:
+      "Branding that builds trust and drives loyalty through clear visuals and messaging, into an unforgettable online experience.",
     items: [
-      'Brand Strategy and Messaging',
-      'Logo Design',
-      'Visual Identity',
-      'Brand Guidelines & Frameworks',
-      'Marketing materials',
-      'Motion Design',
+      "Brand Strategy and Messaging",
+      "Logo Design",
+      "Visual Identity",
+      "Brand Guidelines & Frameworks",
+      "Marketing materials",
+      "Motion Design",
     ],
   },
   {
-    number: '02',
-    title: 'Website Design',
-    description: 'Not just about aesthetics, but about developing logical, scalable design systems that are precisely tailored to the web and app application.',
+    number: "02",
+    title: "Website Design",
+    description:
+      "Not just about aesthetics, but about developing logical, scalable design systems that are precisely tailored to the web and app application.",
     items: [
-      'Landing Pages',
-      'Corporate Websites',
-      'Blogs',
-      'E-commerce',
-      'Complex Websites',
+      "Landing Pages",
+      "Corporate Websites",
+      "Blogs",
+      "E-commerce",
+      "Complex Websites",
     ],
   },
   {
-    number: '03',
-    title: 'Web Development',
-    description: 'User-focused app design that maximizes usability and encourages retention.',
+    number: "03",
+    title: "Web Development",
+    description:
+      "User-focused app design that maximizes usability and encourages retention.",
     items: [
-      'Framer, Webflow, or WordPress Builds',
-      'CMS Integration',
-      'SEO Optimization',
-      'Site Migrations',
+      "Framer, Webflow, or WordPress Builds",
+      "CMS Integration",
+      "SEO Optimization",
+      "Site Migrations",
     ],
   },
   {
-    number: '04',
-    title: 'Application Design',
-    description: 'User-focused app design that maximizes usability and encourages retention.',
+    number: "04",
+    title: "Application Design",
+    description:
+      "User-focused app design that maximizes usability and encourages retention.",
     items: [
-      'Mobile Apps',
-      'Desktop Apps',
-      'Complex Systems',
-      'Design Systems Optimization',
+      "Mobile Apps",
+      "Desktop Apps",
+      "Complex Systems",
+      "Design Systems Optimization",
     ],
   },
 ];
@@ -70,16 +74,18 @@ export default function Services() {
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    el.addEventListener('scroll', updateActive, { passive: true });
+    el.addEventListener("scroll", updateActive, { passive: true });
     updateActive();
-    return () => el.removeEventListener('scroll', updateActive);
+    return () => el.removeEventListener("scroll", updateActive);
   }, [updateActive]);
 
   return (
     <section id="about" className="sticky top-0 h-screen bg-dark z-5">
       {/* Section Label */}
       <div className="absolute top-0 left-0 right-0 px-6 md:px-12 py-6 z-20 pointer-events-none">
-        <span className="text-orange font-mono text-sm tracking-widest">// Services</span>
+        <span className="text-[#B5E550] font-mono text-sm tracking-widest">
+          // Services
+        </span>
       </div>
 
       <div className="flex h-full">
@@ -96,8 +102,8 @@ export default function Services() {
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 className="text-[clamp(8rem,20vw,16rem)] font-black leading-none select-none block"
                 style={{
-                  WebkitTextStroke: '1.5px rgba(255,255,255,0.2)',
-                  color: 'transparent',
+                  WebkitTextStroke: "1.5px rgba(255,255,255,0.2)",
+                  color: "transparent",
                 }}
               >
                 {services[activeIndex].number}
@@ -110,7 +116,7 @@ export default function Services() {
         <div
           ref={scrollRef}
           className="w-full md:w-[60%] lg:w-[65%] h-full overflow-y-scroll hide-scrollbar"
-          style={{ scrollSnapType: 'y mandatory' }}
+          style={{ scrollSnapType: "y mandatory" }}
         >
           {services.map((service, index) => (
             <div
@@ -124,8 +130,8 @@ export default function Services() {
                   <span
                     className="text-[clamp(6rem,18vw,10rem)] font-black leading-none select-none"
                     style={{
-                      WebkitTextStroke: '1.5px rgba(255,255,255,0.2)',
-                      color: 'transparent',
+                      WebkitTextStroke: "1.5px rgba(255,255,255,0.2)",
+                      color: "transparent",
                     }}
                   >
                     {service.number}

@@ -40,8 +40,11 @@ export default function Navbar() {
             <div className="max-w-full mx-auto px-3 md:px-12 flex items-center justify-between h-20">
               {/* Left: Brand */}
               <div className="flex flex-col">
-                <span className="lg:font-extrabold sm:font-light lg:text-xl sm:text-sm tracking-tighter text-black/80">
-                  © Jobayer Design & Technology
+                <span className="text-md font-light sm:text-sm lg:text-xl lg:font-extrabold tracking-tighter text-black/80">
+                  JBM Labs
+                </span>
+                <span className="mt-0.5 text-[7px] sm:text-[10px] lg:text-[12px] tracking-[0.18em] text-black/55 whitespace-nowrap">
+                  Design • Development • AI • Digital Experiences
                 </span>
               </div>
 
