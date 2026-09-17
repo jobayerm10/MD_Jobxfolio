@@ -37,7 +37,7 @@ export default function Navbar() {
             transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="fixed top-0 left-0 right-0 z-50 bg-transparent"
           >
-            <div className="max-w-full mx-auto px-3 md:px-12 flex items-center justify-between h-20">
+            <div className="max-w-full mx-auto px-3 md:px-12 flex items-center justify-between h-18">
               {/* Left: Brand */}
               <div className="flex flex-col">
                 <span className="text-md font-light sm:text-sm lg:text-xl lg:font-extrabold tracking-tighter text-black/80">
