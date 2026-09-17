@@ -40,10 +40,18 @@ export default function Navbar() {
             <div className="max-w-full mx-auto px-3 md:px-12 flex items-center justify-between h-18">
               {/* Left: Brand */}
               <div className="flex flex-col">
-                <span className="text-md font-light sm:text-sm lg:text-xl lg:font-extrabold tracking-tighter text-black/80">
+                <span
+                  className={`text-md font-light sm:text-sm lg:text-xl lg:font-extrabold tracking-tighter ${
+                    isOpen ? "text-white" : "text-black/80"
+                  } md:text-black/80`}
+                >
                   JBM Labs
                 </span>
-                <span className="mt-0.5 text-[7px] sm:text-[10px] lg:text-[12px] tracking-[0.18em] text-black/55 whitespace-nowrap">
+                <span
+                  className={`mt-0.5 text-[7px] sm:text-[10px] lg:text-[12px] tracking-[0.18em] ${
+                    isOpen ? "text-white" : "text-black/55"
+                  } md:text-black/55 whitespace-nowrap`}
+                >
                   Design • Development • AI • Digital Experiences
                 </span>
               </div>
@@ -108,10 +116,6 @@ export default function Navbar() {
                 aria-label="Toggle menu"
               >
                 <motion.span
-                  animate={isOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-                  className="block w-6 h-px bg-black origin-center"
-                />
-                <motion.span
                   animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
                   className="block w-6 h-px bg-black"
                 />
@@ -131,12 +135,20 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-black/95 backdrop-blur-lg flex flex-col items-center justify-center gap-8 md:hidden"
+            initial={{ y: "-100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "-100%" }}
+            transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="fixed top-0 left-0 right-0 z-40 h-56 bg-black/95 backdrop-blur-lg px-3 pt-20 flex flex-col items-start gap-6 md:hidden"
           >
+            <button
+              onClick={() => setIsOpen(false)}
+              aria-label="Close menu"
+              className="absolute top-7 right-4 p-2 text-white"
+            >
+              <span className="block w-5 h-px bg-white rotate-45 translate-y-px" />
+              <span className="block w-5 h-px bg-white -rotate-45" />
+            </button>
             {navLinks.map((link, i) => (
               <motion.a
                 key={link.label}
@@ -146,7 +158,7 @@ export default function Navbar() {
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ delay: i * 0.1 }}
                 onClick={() => setIsOpen(false)}
-                className="text-3xl font-light text-white tracking-widest hover:text-muted transition-colors"
+                className="text-sm font-medium text-white tracking-wide hover:text-muted transition-colors"
               >
                 {link.label}
               </motion.a>
