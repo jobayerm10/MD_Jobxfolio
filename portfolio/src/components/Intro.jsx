@@ -67,7 +67,10 @@ export default function Intro() {
   const contentOpacity = useTransform(scrollYProgress, [0.55, 0.75], [0, 1]);
   const contentY = useTransform(scrollYProgress, [0.55, 0.75], [30, 0]);
   const textParts = [
-    { text: "As a Web developer, I create custom web solutions", highlight: false },
+    {
+      text: "As a Web developer, I create custom web solutions",
+      highlight: false,
+    },
     {
       text: " that solve real business problems, strengthen your online visibility, and drive measurable growth.",
       highlight: true,
@@ -84,14 +87,11 @@ export default function Intro() {
     >
       <div className="max-w-350 mx-auto w-full px-6 md:px-12 py-32">
         {/* Section Label */}
-        <motion.div
-          style={{ opacity: labelOpacity, x: labelX }}
-          className="mb-16"
-        >
+        <div className="absolute top-0 left-0 right-0 px-6 md:px-12 py-6 z-20 pointer-events-none">
           <span className="text-[#B5E550] font-mono text-sm tracking-widest">
             // Intro
           </span>
-        </motion.div>
+        </div>
 
         {/* Main Text */}
         <div ref={textRef} className="max-w-5xl">
