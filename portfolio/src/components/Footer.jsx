@@ -109,11 +109,11 @@ export default function Footer() {
         transition={{ duration: 0.8 }}
         className="absolute bottom-20 left-6 md:left-12 z-20"
       >
-        <p className="text-black text-sm md:text-base leading-loose tracking-wide">
+        <p className="text-white md:text-black text-sm md:text-base leading-loose tracking-wide">
           <span className="font-extrabold text-md">Office:</span>{" "}
           <span className="font-semibold">Rajshahi, Bangladesh</span>
         </p>
-        <p className="text-black text-sm md:text-base leading-loose tracking-wide">
+        <p className="text-white md:text-black text-sm md:text-base leading-loose tracking-wide">
           <span className="font-extrabold text-md">Mail:</span>{" "}
           <a
             href="mailto:jobayermahmud976@gmail.com"
@@ -122,7 +122,7 @@ export default function Footer() {
             jobayermahmud976@gmail.com
           </a>
         </p>
-        <p className="text-black text-sm md:text-base leading-loose tracking-wide">
+        <p className="text-white md:text-black text-sm md:text-base leading-loose tracking-wide">
           <span className="font-extrabold text-md">Phone:</span>{" "}
           <a
             href="tel:+8801723180690"
@@ -139,7 +139,7 @@ export default function Footer() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="absolute bottom-6 left-6 md:left-12 right-6 md:right-12 z-20 flex items-center gap-6"
+        className="absolute bottom-6 left-1/2 z-20 flex w-max max-w-[calc(100%-3rem)] -translate-x-1/2 flex-wrap items-center justify-center gap-6"
       >
         {socialLinks.map((social) => (
           <a
@@ -147,7 +147,7 @@ export default function Footer() {
             href={social.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-black font-semibold text-sm tracking-wider hover:opacity-60 transition-opacity duration-300 group"
+            className="flex items-center gap-2 text-white md:text-black font-semibold text-sm tracking-wider hover:opacity-60 transition-opacity duration-300 group"
           >
             <span className="opacity-70 group-hover:opacity-100 transition-opacity">
               {social.icon}
