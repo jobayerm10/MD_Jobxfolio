@@ -71,11 +71,11 @@ export default function Footer() {
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
-        className="absolute top-8 right-8 z-30 w-12 h-12 rounded-full border border-black/20 flex items-center justify-center bg-white/80 backdrop-blur-sm hover:bg-white transition-colors duration-300 group"
+        className="absolute top-8 right-8 z-30 h-12 w-12 overflow-hidden rounded-full border border-black/20 bg-black/90 backdrop-blur-sm transition-all duration-500 ease-out group hover:w-36 hover:rounded-full hover:bg-black cursor-pointer"
         aria-label="Scroll to top"
       >
         <svg
-          className="w-5 h-5 text-black group-hover:-translate-y-0.5 transition-transform duration-300"
+          className="absolute left-3.5 h-5 w-5 text-white transition-transform duration-500 group-hover:-translate-y-0.5"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -87,6 +87,9 @@ export default function Footer() {
             d="M5 15l7-7 7 7"
           />
         </svg>
+        <span className="ml-8 whitespace-nowrap text-xs font-bold tracking-wide text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          Scroll to top
+        </span>
       </motion.button>
 
       {/* Giant Marquee Text */}
@@ -139,7 +142,7 @@ export default function Footer() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="absolute bottom-6 left-1/2 z-20 flex w-max max-w-[calc(100%-3rem)] -translate-x-1/2 flex-wrap items-center justify-center gap-6"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 z-20 flex w-max max-w-[calc(100%-3rem)] flex-wrap items-center justify-center gap-6 md:top-auto md:bottom-6 md:left-6 md:right-6 md:w-auto md:max-w-none md:translate-x-0 md:translate-y-0 md:justify-start"
       >
         {socialLinks.map((social) => (
           <a

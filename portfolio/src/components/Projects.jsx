@@ -1,42 +1,47 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
+import { useState, useRef, useEffect, useCallback } from "react";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  AnimatePresence,
+} from "framer-motion";
 
 const projects = [
   {
-    year: '2024',
-    title: 'Formula Vintage',
+    year: "2024",
+    title: "Formula Vintage",
     description:
-      'For Formula Vintage, we crafted a design that honors the rich heritage of classic cars while adding a modern twist. Combining timeless elegance with sleek, contemporary elements, we created an experience that appeals to both enthusiasts and newcomers, celebrating the past with a fresh perspective.',
-    tags: ['Landing Page', 'Mobile App', 'Redesign'],
+      "For Formula Vintage, we crafted a design that honors the rich heritage of classic cars while adding a modern twist. Combining timeless elegance with sleek, contemporary elements, we created an experience that appeals to both enthusiasts and newcomers, celebrating the past with a fresh perspective.",
+    tags: ["Landing Page", "Mobile App", "Redesign"],
     image:
-      'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1200&h=800&fit=crop',
+      "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1200&h=800&fit=crop",
   },
   {
-    year: '2024',
-    title: 'Sprey Zest',
+    year: "2024",
+    title: "Sprey Zest",
     description:
-      'Complete website design and brand identity for a beverage company, focusing on vibrant visual storytelling and conversion-driven layouts. We brought energy and freshness to every pixel, ensuring the brand resonates with its audience.',
-    tags: ['Website Design', 'Branding'],
+      "Complete website design and brand identity for a beverage company, focusing on vibrant visual storytelling and conversion-driven layouts. We brought energy and freshness to every pixel, ensuring the brand resonates with its audience.",
+    tags: ["Website Design", "Branding"],
     image:
-      'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=800&fit=crop',
+      "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=800&fit=crop",
   },
   {
-    year: '2020',
-    title: 'Super Pro',
+    year: "2020",
+    title: "Super Pro",
     description:
-      'Cross-platform desktop and mobile application design for a productivity tool, emphasizing intuitive workflows and clean interfaces. Built for power users who demand efficiency without sacrificing aesthetics.',
-    tags: ['Desktop App', 'Mobile App'],
+      "Cross-platform desktop and mobile application design for a productivity tool, emphasizing intuitive workflows and clean interfaces. Built for power users who demand efficiency without sacrificing aesthetics.",
+    tags: ["Desktop App", "Mobile App"],
     image:
-      'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200&h=800&fit=crop',
+      "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200&h=800&fit=crop",
   },
   {
-    year: '2024',
-    title: 'Architech Buildings',
+    year: "2024",
+    title: "Architech Buildings",
     description:
-      'End-to-end mobile app, branding, and website design for a construction tech startup, delivering a cohesive premium brand experience that bridges the gap between innovation and trust.',
-    tags: ['Mobile App', 'Branding', 'Website Design'],
+      "End-to-end mobile app, branding, and website design for a construction tech startup, delivering a cohesive premium brand experience that bridges the gap between innovation and trust.",
+    tags: ["Mobile App", "Branding", "Website Design"],
     image:
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&h=800&fit=crop',
+      "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&h=800&fit=crop",
   },
 ];
 
@@ -62,18 +67,18 @@ function CustomCursor({ containerRef }) {
 
     const handleLeave = () => setVisible(false);
 
-    container.addEventListener('mousemove', handleMove);
-    container.addEventListener('mouseleave', handleLeave);
+    container.addEventListener("mousemove", handleMove);
+    container.addEventListener("mouseleave", handleLeave);
     return () => {
-      container.removeEventListener('mousemove', handleMove);
-      container.removeEventListener('mouseleave', handleLeave);
+      container.removeEventListener("mousemove", handleMove);
+      container.removeEventListener("mouseleave", handleLeave);
     };
   }, [containerRef, cursorX, cursorY]);
 
   return (
     <motion.div
       className="pointer-events-none absolute z-50 flex items-center justify-center"
-      style={{ x, y, translateX: '-50%', translateY: '-50%' }}
+      style={{ x, y, translateX: "-50%", translateY: "-50%" }}
     >
       <motion.div
         animate={{ scale: visible ? 1 : 0, opacity: visible ? 1 : 0 }}
@@ -165,16 +170,16 @@ export default function Projects() {
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    el.addEventListener('scroll', updateActive, { passive: true });
+    el.addEventListener("scroll", updateActive, { passive: true });
     updateActive();
-    return () => el.removeEventListener('scroll', updateActive);
+    return () => el.removeEventListener("scroll", updateActive);
   }, [updateActive]);
 
   return (
     <section id="projects" className="sticky top-0 h-screen bg-dark z-5">
       {/* Section Label */}
       <div className="absolute top-0 left-0 right-0 px-6 md:px-12 py-6 z-20 pointer-events-none">
-        <span className="text-orange font-mono text-sm tracking-widest">
+        <span className="text-[#B5E550] font-mono text-sm tracking-widest">
           // Projects
         </span>
       </div>
@@ -182,11 +187,11 @@ export default function Projects() {
       {/* Project Counter */}
       <div className="absolute top-6 right-6 md:right-12 z-20 flex items-center gap-3">
         <span className="text-white font-mono text-sm">
-          {String(activeIndex + 1).padStart(2, '0')}
+          {String(activeIndex + 1).padStart(2, "0")}
         </span>
         <span className="text-muted">/</span>
         <span className="text-muted font-mono text-sm">
-          {String(projects.length).padStart(2, '0')}
+          {String(projects.length).padStart(2, "0")}
         </span>
       </div>
 
@@ -194,13 +199,10 @@ export default function Projects() {
       <div
         ref={scrollRef}
         className="h-full overflow-y-scroll hide-scrollbar"
-        style={{ scrollSnapType: 'y mandatory' }}
+        style={{ scrollSnapType: "y mandatory" }}
       >
         {projects.map((project, index) => (
-          <div
-            key={project.title}
-            className="h-full scroll-snap-start"
-          >
+          <div key={project.title} className="h-full scroll-snap-start">
             <ProjectSlide
               project={project}
               index={index}
