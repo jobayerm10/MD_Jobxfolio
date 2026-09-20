@@ -115,7 +115,7 @@ export default function Services() {
         {/* ─── Right: Scrollable Content Panels ─── */}
         <div
           ref={scrollRef}
-          className="w-full md:w-[60%] lg:w-[65%] h-full overflow-y-scroll hide-scrollbar"
+          className="w-full md:w-[60%] lg:w-[65%]  h-full overflow-y-scroll hide-scrollbar"
           style={{ scrollSnapType: "y mandatory" }}
         >
           {services.map((service, index) => (
@@ -126,7 +126,7 @@ export default function Services() {
             >
               <div className="w-full max-w-2xl">
                 {/* Mobile: large number */}
-                <div className="md:hidden mb-8">
+                <div className="md:hidden mb-8 ">
                   <span
                     className="text-[clamp(6rem,18vw,10rem)] font-black leading-none select-none"
                     style={{
@@ -149,7 +149,7 @@ export default function Services() {
                 </p>
 
                 {/* Items List */}
-                <div className="border-t border-border">
+                <div className="border-t border-border ">
                   {service.items.map((item, i) => (
                     <div
                       key={item}

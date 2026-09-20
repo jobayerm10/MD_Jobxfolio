@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useState } from "react";
-import image from "../assets/hero5.png";
+import image from "../assets/hero6.png";
 
 export default function Hero() {
   const { scrollYProgress } = useScroll();
