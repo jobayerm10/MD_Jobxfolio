@@ -22,6 +22,54 @@ const testimonials = [
   },
 ];
 
+function MagneticArrow({ direction, onClick, label }) {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouse = (e) => {
+    const { clientX, clientY } = e;
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    const centerX = left + width / 2;
+    const centerY = top + height / 2;
+    setPosition({ x: (clientX - centerX) * 0.2, y: (clientY - centerY) * 0.2 });
+  };
+
+  const reset = () => setPosition({ x: 0, y: 0 });
+
+  return (
+    <motion.button
+      onClick={onClick}
+      onMouseMove={handleMouse}
+      onMouseLeave={reset}
+      animate={{ x: position.x, y: position.y }}
+      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      className="w-12 h-12 border border-border flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300"
+      aria-label={label}
+    >
+      <svg
+        className="w-5 h-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth={1.5}
+      >
+        {direction === "left" ? (
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15.75 19.5L8.25 12l7.5-7.5"
+          />
+        ) : (
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M8.25 4.5l7.5 7.5-7.5 7.5"
+          />
+        )}
+      </svg>
+    </motion.button>
+  );
+}
+
 export default function Testimonials() {
   const [current, setCurrent] = useState(0);
   const ref = useRef(null);
@@ -47,12 +95,21 @@ export default function Testimonials() {
         </h2>
       </motion.div>
 
-      <div className="border border-border p-8 md:p-16 relative">
+      <div className="border border-border p-8 md:p-16 relative overflow-hidden">
         {/* Fraction Indicator */}
-        <div className="absolute top-8 right-8 md:top-12 md:right-12 flex items-center gap-3">
-          <span className="text-white font-mono text-sm">
-            {String(current + 1).padStart(2, "0")}
-          </span>
+        <div className="absolute top-8 right-8 md:top-12 md:right-12 flex items-center gap-3 z-10">
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={current}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="text-white font-mono text-sm"
+            >
+              {String(current + 1).padStart(2, "0")}
+            </motion.span>
+          </AnimatePresence>
           <span className="text-muted">/</span>
           <span className="text-muted font-mono text-sm">
             {String(testimonials.length).padStart(2, "0")}
@@ -63,65 +120,47 @@ export default function Testimonials() {
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5 }}
+            exit={{ opacity: 0, y: -30 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
             <blockquote className="text-xl md:text-3xl lg:text-4xl font-light leading-relaxed text-white/90 max-w-4xl mb-12">
-              "{testimonials[current].quote}"
+              &ldquo;{testimonials[current].quote}&rdquo;
             </blockquote>
 
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white font-semibold text-lg">
+                <motion.p
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="text-white font-semibold text-lg"
+                >
                   {testimonials[current].name}
-                </p>
-                <p className="text-muted text-sm tracking-wider mt-1">
+                </motion.p>
+                <motion.p
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="text-muted text-sm tracking-wider mt-1"
+                >
                   {testimonials[current].role}
-                </p>
+                </motion.p>
               </div>
 
               {/* Navigation Arrows */}
               <div className="flex items-center gap-4">
-                <button
+                <MagneticArrow
+                  direction="left"
                   onClick={prev}
-                  className="w-12 h-12 border border-border flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300"
-                  aria-label="Previous testimonial"
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={1.5}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15.75 19.5L8.25 12l7.5-7.5"
-                    />
-                  </svg>
-                </button>
-                <button
+                  label="Previous testimonial"
+                />
+                <MagneticArrow
+                  direction="right"
                   onClick={next}
-                  className="w-12 h-12 border border-border flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300"
-                  aria-label="Next testimonial"
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={1.5}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                    />
-                  </svg>
-                </button>
+                  label="Next testimonial"
+                />
               </div>
             </div>
           </motion.div>

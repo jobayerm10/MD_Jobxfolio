@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import image from "../assets/footer2.png";
 
 const socialLinks = [
@@ -32,6 +32,33 @@ const socialLinks = [
   },
 ];
 
+function MagneticLink({ children, className = "", ...props }) {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouse = (e) => {
+    const { clientX, clientY } = e;
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    const centerX = left + width / 2;
+    const centerY = top + height / 2;
+    setPosition({ x: (clientX - centerX) * 0.15, y: (clientY - centerY) * 0.15 });
+  };
+
+  const reset = () => setPosition({ x: 0, y: 0 });
+
+  return (
+    <motion.a
+      onMouseMove={handleMouse}
+      onMouseLeave={reset}
+      animate={{ x: position.x, y: position.y }}
+      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      className={className}
+      {...props}
+    >
+      {children}
+    </motion.a>
+  );
+}
+
 export default function Footer() {
   const sectionRef = useRef(null);
   const textRef = useRef(null);
@@ -43,6 +70,7 @@ export default function Footer() {
   });
 
   const textX = useTransform(scrollYProgress, [0, 1], ["10%", "-30%"]);
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1.1, 1]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -54,16 +82,18 @@ export default function Footer() {
       ref={sectionRef}
       className="relative h-screen w-full overflow-hidden bg-[#E8E4E0]"
     >
-      {/* Background Image */}
-      <div className="absolute inset-0">
+      {/* Background Image with scale animation */}
+      <motion.div
+        className="absolute inset-0"
+        style={{ scale: imageScale }}
+      >
         <img
           src={image}
-          extra
           alt="Contact"
           className="w-full h-full object-cover object-top"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-      </div>
+      </motion.div>
 
       {/* Scroll to top button */}
       <motion.button
@@ -109,14 +139,26 @@ export default function Footer() {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.8, delay: 0.1 }}
         className="absolute bottom-20 left-6 md:left-12 z-20"
       >
-        <p className="text-white md:text-black text-sm md:text-base leading-loose tracking-wide">
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="text-white md:text-black text-sm md:text-base leading-loose tracking-wide"
+        >
           <span className="font-extrabold text-md">Office:</span>{" "}
           <span className="font-semibold">Rajshahi, Bangladesh</span>
-        </p>
-        <p className="text-white md:text-black text-sm md:text-base leading-loose tracking-wide">
+        </motion.p>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="text-white md:text-black text-sm md:text-base leading-loose tracking-wide"
+        >
           <span className="font-extrabold text-md">Mail:</span>{" "}
           <a
             href="mailto:jobayermahmud976@gmail.com"
@@ -124,8 +166,14 @@ export default function Footer() {
           >
             jobayermahmud976@gmail.com
           </a>
-        </p>
-        <p className="text-white md:text-black text-sm md:text-base leading-loose tracking-wide">
+        </motion.p>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="text-white md:text-black text-sm md:text-base leading-loose tracking-wide"
+        >
           <span className="font-extrabold text-md">Phone:</span>{" "}
           <a
             href="tel:+8801723180690"
@@ -133,7 +181,7 @@ export default function Footer() {
           >
             +8801723180690
           </a>
-        </p>
+        </motion.p>
       </motion.div>
 
       {/* Bottom — Social Links */}
@@ -141,22 +189,22 @@ export default function Footer() {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 0.2 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
         className="absolute bottom-6 left-1/2 z-20 flex w-max max-w-[calc(100%-3rem)] -translate-x-1/2 flex-wrap items-center justify-center gap-6"
       >
         {socialLinks.map((social) => (
-          <a
+          <MagneticLink
             key={social.label}
             href={social.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-white md:text-black font-semibold text-sm tracking-wider hover:opacity-60 transition-opacity duration-300 group"
+            className="flex items-center gap-2 text-white md:text-white font-semibold text-sm tracking-wider hover:opacity-60 transition-opacity duration-300 group"
           >
             <span className="opacity-70 group-hover:opacity-100 transition-opacity">
               {social.icon}
             </span>
             {social.label}
-          </a>
+          </MagneticLink>
         ))}
       </motion.div>
     </footer>

@@ -1,23 +1,90 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import image from "../assets/hero6.png";
+
+function MagneticLink({ children, className = "", ...props }) {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouse = (e) => {
+    const { clientX, clientY } = e;
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    const centerX = left + width / 2;
+    const centerY = top + height / 2;
+    setPosition({ x: (clientX - centerX) * 0.2, y: (clientY - centerY) * 0.2 });
+  };
+
+  const reset = () => setPosition({ x: 0, y: 0 });
+
+  return (
+    <motion.a
+      onMouseMove={handleMouse}
+      onMouseLeave={reset}
+      animate={{ x: position.x, y: position.y }}
+      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      className={className}
+      {...props}
+    >
+      {children}
+    </motion.a>
+  );
+}
+
+const letterVariants = {
+  hidden: { y: 120, opacity: 0 },
+  visible: (i) => ({
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+      delay: 2.2 + i * 0.03,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
+};
+
+function AnimatedText({ text, className = "" }) {
+  return (
+    <span className={`inline-flex overflow-hidden ${className}`}>
+      {text.split("").map((char, i) => (
+        <motion.span
+          key={i}
+          custom={i}
+          variants={letterVariants}
+          initial="hidden"
+          animate="visible"
+          className="inline-block"
+        >
+          {char === " " ? "\u00A0" : char}
+        </motion.span>
+      ))}
+    </span>
+  );
+}
 
 export default function Hero() {
   const { scrollYProgress } = useScroll();
   const textX = useTransform(scrollYProgress, [0, 0.3], ["0%", "-40%"]);
+  const imageScale = useTransform(scrollYProgress, [0, 0.5], [1, 1.15]);
+  const imageY = useTransform(scrollYProgress, [0, 0.5], ["0%", "10%"]);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
   return (
     <section className="sticky top-0 h-screen w-full overflow-hidden bg-[#E8E4E0] z-0">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <img
+      {/* Background Image with clip-path reveal */}
+      <motion.div
+        className="absolute inset-0"
+        initial={{ clipPath: "inset(100% 0 0 0)" }}
+        animate={{ clipPath: "inset(0% 0 0 0)" }}
+        transition={{ duration: 1.2, delay: 1.8, ease: [0.76, 0, 0.24, 1] }}
+      >
+        <motion.img
           src={image}
           alt="Jobayer Mahmud"
           className="w-full h-full object-cover object-center"
+          style={{ scale: imageScale, y: imageY }}
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
-      </div>
+      </motion.div>
 
       {/* Giant Marquee Text */}
       <div className="absolute inset-0 flex items-center overflow-hidden mt-[20%]">
@@ -35,8 +102,10 @@ export default function Hero() {
             });
           }}
         >
-          <h2 className="text-[24vw] lg:text-[10vw] font-semibold lg:font-black  leading-none tracking-tighter text-white select-none">
-            Jobayer Mahmud - Jobayer Mahmud - Jobayer Mahmud -
+          <h2 className="text-[24vw] lg:text-[10vw] font-semibold lg:font-black leading-none tracking-tighter text-white/90 select-none">
+            <AnimatedText text="Jobayer Mahmud - " />
+            <AnimatedText text="Jobayer Mahmud - " />
+            <AnimatedText text="Jobayer Mahmud - " />
           </h2>
           <span
             style={{ left: cursorPosition.x, top: cursorPosition.y }}
@@ -51,7 +120,7 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
+        transition={{ duration: 0.8, delay: 2.6 }}
         className="absolute bottom-20 right-6 md:bottom-8 md:left-12 md:right-auto flex flex-col gap-3 z-10"
       >
         {[
@@ -83,7 +152,7 @@ export default function Hero() {
             ),
           },
         ].map((social) => (
-          <a
+          <MagneticLink
             key={social.label}
             href={social.href}
             target="_blank"
@@ -96,7 +165,7 @@ export default function Hero() {
             <span className="hidden md:inline md:text-black">
               {social.label}
             </span>
-          </a>
+          </MagneticLink>
         ))}
       </motion.div>
 
@@ -104,14 +173,14 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.8 }}
+        transition={{ duration: 0.8, delay: 2.8 }}
         className="absolute bottom-20 left-3 text-left z-10 md:bottom-8 md:left-auto md:right-6 md:text-right lg:right-12"
       >
         <h2 className="text-2xl font-bold text-white/70 leading-tighter tracking-tighter md:text-6xl md:text-black/75">
-          Web Developer
+          <AnimatedText text="Web Developer" />
         </h2>
         <h2 className="text-2xl font-bold text-white/70 leading-tighter tracking-tighter md:text-6xl md:text-black/75">
-          & UI Enthusiast
+          <AnimatedText text="& UI Enthusiast" />
         </h2>
       </motion.div>
     </section>

@@ -13,7 +13,7 @@
   --font-mono: "JetBrains Mono", "DM Mono", monospace;
 }
 
-/* ── Locomotive Scroll Base ── */
+/* --- Locomotive Scroll Base --- */
 html.has-scroll-smooth {
   overflow: hidden;
 }
@@ -31,7 +31,7 @@ html.has-scroll-smooth body {
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 .scroll-snap-start { scroll-snap-align: start; }
 
-/* ── Locomotive Scroll Parallax & Reveal Classes ── */
+/* --- Locomotive Scroll Parallax & Reveal Classes --- */
 [data-scroll] {
   transition: none !important;
 }
@@ -97,4 +97,43 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #262626;
   border-radius: 2px;
+}
+
+/* Smooth text rendering */
+h1, h2, h3, h4, h5, h6 {
+  text-rendering: optimizeLegibility;
+}
+
+/* Custom cursor for interactive elements */
+a, button {
+  cursor: pointer;
+}
+
+/* Clip path reveal animation */
+@keyframes clipPathReveal {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0% 0 0);
+  }
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
 }

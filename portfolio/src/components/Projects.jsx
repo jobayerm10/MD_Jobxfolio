@@ -1,10 +1,6 @@
-import { useState, useRef, useEffect, useCallback } from "react";
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  AnimatePresence,
-} from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import gsap from "gsap";
 
 const projects = [
   {
@@ -93,48 +89,74 @@ function CustomCursor({ containerRef }) {
   );
 }
 
-function ProjectSlide({ project, index, isCurrent }) {
+function ProjectSlide({ project, slideRef }) {
   const imageRef = useRef(null);
 
   return (
-    <div className="h-full w-full flex flex-col md:flex-row items-center gap-8 md:gap-12 px-6 md:px-12 lg:px-20 py-24">
-      {/* Left — Image */}
-      <div
-        ref={imageRef}
-        className="relative w-full md:w-[55%] h-[40vh] md:h-[70vh] overflow-hidden rounded-lg group"
-      >
-        <CustomCursor containerRef={imageRef} />
-        <motion.img
-          initial={{ scale: 1.1 }}
-          animate={{ scale: isCurrent ? 1 : 0.95 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          src={project.image}
-          alt={project.title}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500" />
-      </div>
-
-      {/* Right — Content */}
-      <div className="w-full md:w-[45%] flex flex-col justify-center">
+    <div
+      ref={slideRef}
+      className="absolute inset-0 h-full w-full will-change-transform"
+    >
+      <div className="h-full w-full flex flex-col md:flex-row items-center gap-8 md:gap-12 px-6 md:px-12 lg:px-20 py-24">
+        {/* Left — Image with clip-path reveal */}
         <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: isCurrent ? 1 : 0, x: isCurrent ? 0 : 40 }}
-          transition={{ duration: 0.6, delay: 0.15 }}
+          ref={imageRef}
+          initial={{ clipPath: "inset(0 100% 0 0)" }}
+          whileInView={{ clipPath: "inset(0 0% 0 0)" }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+          className="relative w-full md:w-[55%] h-[40vh] md:h-[70vh] overflow-hidden rounded-lg group"
         >
-          <span className="text-muted font-mono text-sm mb-4 block">
+          <CustomCursor containerRef={imageRef} />
+          <motion.img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover"
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          />
+          <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500" />
+        </motion.div>
+
+        {/* Right — Content */}
+        <div className="w-full md:w-[45%] flex flex-col justify-center">
+          <motion.span
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-muted font-mono text-sm mb-4 block"
+          >
             ({project.year})
-          </span>
+          </motion.span>
 
-          <h3 className="text-[clamp(2rem,5vw,4rem)] font-bold leading-tight tracking-tight mb-6">
+          <motion.h3
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="text-[clamp(2rem,5vw,4rem)] font-bold leading-tight tracking-tight mb-6"
+          >
             {project.title}
-          </h3>
+          </motion.h3>
 
-          <p className="text-muted text-sm leading-relaxed mb-10 max-w-lg">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="text-muted text-sm leading-relaxed mb-10 max-w-lg"
+          >
             {project.description}
-          </p>
+          </motion.p>
 
-          <div className="flex flex-col gap-0 max-w-md">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="flex flex-col gap-0 max-w-md"
+          >
             {project.tags.map((tag, i) => (
               <div
                 key={tag}
@@ -145,8 +167,8 @@ function ProjectSlide({ project, index, isCurrent }) {
                 </span>
               </div>
             ))}
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </div>
   );
@@ -155,40 +177,91 @@ function ProjectSlide({ project, index, isCurrent }) {
 export default function Projects() {
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollRef = useRef(null);
+  const slideRefs = useRef([]);
 
-  const updateActive = useCallback(() => {
+  // GSAP animation for slide overlay effect
+  useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
-    const scrollTop = container.scrollTop;
-    const panelHeight = container.clientHeight;
-    if (panelHeight === 0) return;
-    const newIndex = Math.round(scrollTop / panelHeight);
-    const clamped = Math.max(0, Math.min(newIndex, projects.length - 1));
-    setActiveIndex(clamped);
-  }, []);
 
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.addEventListener("scroll", updateActive, { passive: true });
-    updateActive();
-    return () => el.removeEventListener("scroll", updateActive);
-  }, [updateActive]);
+    let ticking = false;
+
+    const animateSlides = () => {
+      const scrollTop = container.scrollTop;
+      const panelHeight = container.clientHeight;
+      if (panelHeight === 0) return;
+
+      const scrollFraction = scrollTop / panelHeight;
+
+      slideRefs.current.forEach((slide, i) => {
+        if (!slide) return;
+
+        const distance = i - scrollFraction;
+
+        const scale = 1 - Math.abs(distance) * 0.05;
+        const y = distance * -60;
+        const opacity = Math.max(0, 1 - Math.abs(distance) * 0.8);
+        const borderRadius = Math.abs(distance) < 0.5 ? "16px" : "0px";
+
+        gsap.set(slide, {
+          y: `${y}%`,
+          scale: Math.max(0.8, scale),
+          opacity: Math.max(0, opacity),
+          borderRadius,
+          zIndex: projects.length - Math.abs(Math.round(distance)),
+        });
+      });
+
+      const newIndex = Math.max(
+        0,
+        Math.min(Math.round(scrollFraction), projects.length - 1)
+      );
+      setActiveIndex(newIndex);
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          animateSlides();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    container.addEventListener("scroll", onScroll, { passive: true });
+    animateSlides();
+
+    return () => {
+      container.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
   return (
     <section id="projects" className="sticky top-0 h-screen bg-dark z-5">
       {/* Section Label */}
-      <div className="absolute top-0 left-0 right-0 px-6 md:px-12 py-6 z-20 pointer-events-none">
-        <span className="text-[#B5E550] font-mono text-sm tracking-widest">
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="absolute top-0 left-0 right-0 px-6 md:px-12 py-6 z-30 pointer-events-none"
+      >
+        <span className="text-orange font-mono text-sm tracking-widest">
           // Projects
         </span>
-      </div>
+      </motion.div>
 
       {/* Project Counter */}
-      <div className="absolute top-6 right-6 md:right-12 z-20 flex items-center gap-3">
-        <span className="text-white font-mono text-sm">
+      <div className="absolute top-6 right-6 md:right-12 z-30 flex items-center gap-3">
+        <motion.span
+          key={activeIndex}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-white font-mono text-sm"
+        >
           {String(activeIndex + 1).padStart(2, "0")}
-        </span>
+        </motion.span>
         <span className="text-muted">/</span>
         <span className="text-muted font-mono text-sm">
           {String(projects.length).padStart(2, "0")}
@@ -198,18 +271,20 @@ export default function Projects() {
       {/* Scrollable project slides */}
       <div
         ref={scrollRef}
-        className="h-full overflow-y-scroll hide-scrollbar"
+        className="h-full overflow-y-scroll hide-scrollbar relative"
         style={{ scrollSnapType: "y mandatory" }}
       >
-        {projects.map((project, index) => (
-          <div key={project.title} className="h-full scroll-snap-start">
-            <ProjectSlide
-              project={project}
-              index={index}
-              isCurrent={index === activeIndex}
-            />
-          </div>
-        ))}
+        <div className="relative h-full">
+          {projects.map((project, index) => (
+            <div
+              key={project.title}
+              className="h-full scroll-snap-start"
+              ref={(el) => (slideRefs.current[index] = el)}
+            >
+              <ProjectSlide project={project} />
+            </div>
+          ))}
+        </div>
       </div>
 
       <style>{`

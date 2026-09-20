@@ -1,11 +1,38 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
 
+function MagneticButton({ children, className = "", ...props }) {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouse = (e) => {
+    const { clientX, clientY } = e;
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    const centerX = left + width / 2;
+    const centerY = top + height / 2;
+    setPosition({ x: (clientX - centerX) * 0.15, y: (clientY - centerY) * 0.15 });
+  };
+
+  const reset = () => setPosition({ x: 0, y: 0 });
+
+  return (
+    <motion.a
+      onMouseMove={handleMouse}
+      onMouseLeave={reset}
+      animate={{ x: position.x, y: position.y }}
+      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      className={className}
+      {...props}
+    >
+      {children}
+    </motion.a>
+  );
+}
+
 function AnimatedButton() {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <a
+    <MagneticButton
       href="#projects"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -34,7 +61,7 @@ function AnimatedButton() {
       >
         See my Work
       </motion.span>
-    </a>
+    </MagneticButton>
   );
 }
 
@@ -87,11 +114,14 @@ export default function Intro() {
     >
       <div className="max-w-350 mx-auto w-full px-6 md:px-12 py-32">
         {/* Section Label */}
-        <div className="absolute top-0 left-0 right-0 px-6 md:px-12 py-6 z-20 pointer-events-none">
+        <motion.div
+          style={{ opacity: labelOpacity, x: labelX }}
+          className="absolute top-0 left-0 right-0 px-6 md:px-12 py-6 z-20 pointer-events-none"
+        >
           <span className="text-[#B5E550] font-mono text-sm tracking-widest">
             // Intro
           </span>
-        </div>
+        </motion.div>
 
         {/* Main Text */}
         <div ref={textRef} className="max-w-5xl">

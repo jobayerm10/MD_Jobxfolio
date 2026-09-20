@@ -55,6 +55,30 @@ const services = [
   },
 ];
 
+function AutoMarquee() {
+  const marqueeText = "Design • Development • AI • Digital Experiences • ";
+  return (
+    <div className="absolute bottom-0 left-0 right-0 overflow-hidden border-t border-border py-4">
+      <motion.div
+        className="flex whitespace-nowrap"
+        animate={{ x: ["0%", "-50%"] }}
+        transition={{ duration: 20, ease: "linear", repeat: Infinity }}
+      >
+        {Array(4)
+          .fill(marqueeText)
+          .map((text, i) => (
+            <span
+              key={i}
+              className="text-muted/30 font-mono text-xs tracking-widest uppercase mr-4"
+            >
+              {text}
+            </span>
+          ))}
+      </motion.div>
+    </div>
+  );
+}
+
 export default function Services() {
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollRef = useRef(null);
@@ -82,14 +106,20 @@ export default function Services() {
   return (
     <section id="about" className="sticky top-0 h-screen bg-dark z-5">
       {/* Section Label */}
-      <div className="absolute top-0 left-0 right-0 px-6 md:px-12 py-6 z-20 pointer-events-none">
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="absolute top-0 left-0 right-0 px-6 md:px-12 py-6 z-20 pointer-events-none"
+      >
         <span className="text-[#B5E550] font-mono text-sm tracking-widest">
           // Services
         </span>
-      </div>
+      </motion.div>
 
       <div className="flex h-full">
-        {/* ─── Left: Fixed Sidebar Number ─── */}
+        {/* --- Left: Fixed Sidebar Number --- */}
         <div className="w-[40%] lg:w-[35%] relative hidden md:flex flex-col items-center justify-center">
           {/* Large animated number */}
           <div className="relative w-full flex items-center justify-center">
@@ -112,10 +142,10 @@ export default function Services() {
           </div>
         </div>
 
-        {/* ─── Right: Scrollable Content Panels ─── */}
+        {/* --- Right: Scrollable Content Panels --- */}
         <div
           ref={scrollRef}
-          className="w-full md:w-[60%] lg:w-[65%]  h-full overflow-y-scroll hide-scrollbar"
+          className="w-full md:w-[60%] lg:w-[65%] h-full overflow-y-scroll hide-scrollbar relative"
           style={{ scrollSnapType: "y mandatory" }}
         >
           {services.map((service, index) => (
@@ -139,17 +169,35 @@ export default function Services() {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-[clamp(2rem,5vw,3.8rem)] font-bold leading-tight tracking-tight mb-4">
+                <motion.h3
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6 }}
+                  className="text-[clamp(2rem,5vw,3.8rem)] font-bold leading-tight tracking-tight mb-4"
+                >
                   {service.title}
-                </h3>
+                </motion.h3>
 
                 {/* Description */}
-                <p className="text-muted text-sm leading-relaxed mb-10 max-w-lg">
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                  className="text-muted text-sm leading-relaxed mb-10 max-w-lg"
+                >
                   {service.description}
-                </p>
+                </motion.p>
 
                 {/* Items List */}
-                <div className="border-t border-border ">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="border-t border-border"
+                >
                   {service.items.map((item, i) => (
                     <div
                       key={item}
@@ -163,10 +211,13 @@ export default function Services() {
                       </span>
                     </div>
                   ))}
-                </div>
+                </motion.div>
               </div>
             </div>
           ))}
+
+          {/* Auto-scrolling marquee at bottom */}
+          <AutoMarquee />
         </div>
       </div>
 
