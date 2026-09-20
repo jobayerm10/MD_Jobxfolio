@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef } from "react";
-import image from "../assets/footer.png";
+import image from "../assets/footer2.png";
 
 const socialLinks = [
   {
@@ -60,7 +60,7 @@ export default function Footer() {
           src={image}
           extra
           alt="Contact"
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-cover object-top"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
       </div>
@@ -98,7 +98,7 @@ export default function Footer() {
           style={{ x: textX, mixBlendMode: "difference", color: "#fff" }}
           className="whitespace-nowrap"
         >
-          <h2 className="text-[clamp(3rem,12vw,10rem)] font-black leading-none tracking-tighter text-white select-none">
+          <h2 className="text-[3.5rem] sm:text-[clamp(5rem,13vw,11rem)] font-black leading-none tracking-tighter text-white select-none">
             Reach Out - Reach Out - Reach Out -
           </h2>
         </motion.div>
@@ -142,7 +142,7 @@ export default function Footer() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 z-20 flex w-max max-w-[calc(100%-3rem)] flex-wrap items-center justify-center gap-6 md:top-auto md:bottom-6 md:left-6 md:right-6 md:w-auto md:max-w-none md:translate-x-0 md:translate-y-0 md:justify-start"
+        className="absolute bottom-6 left-1/2 z-20 flex w-max max-w-[calc(100%-3rem)] -translate-x-1/2 flex-wrap items-center justify-center gap-6"
       >
         {socialLinks.map((social) => (
           <a
