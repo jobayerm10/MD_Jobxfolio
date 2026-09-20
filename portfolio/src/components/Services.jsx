@@ -57,24 +57,34 @@ const services = [
 
 function AutoMarquee() {
   const marqueeText = "Design • Development • AI • Digital Experiences • ";
+  const items = Array(6).fill(marqueeText);
+
   return (
-    <div className="absolute bottom-0 left-0 right-0 overflow-hidden border-t border-border py-4">
-      <motion.div
-        className="flex whitespace-nowrap"
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: 20, ease: "linear", repeat: Infinity }}
-      >
-        {Array(4)
-          .fill(marqueeText)
-          .map((text, i) => (
+    <div className="w-full overflow-hidden border-t border-border py-4 shrink-0">
+      <div className="flex whitespace-nowrap">
+        <motion.div
+          className="flex shrink-0"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 25, ease: "linear", repeat: Infinity }}
+        >
+          {items.map((text, i) => (
             <span
-              key={i}
-              className="text-muted/30 font-mono text-xs tracking-widest uppercase mr-4"
+              key={`a-${i}`}
+              className="text-muted/60 font-mono text-xs tracking-widest uppercase mr-4 shrink-0"
             >
               {text}
             </span>
           ))}
-      </motion.div>
+          {items.map((text, i) => (
+            <span
+              key={`b-${i}`}
+              className="text-muted/60 font-mono text-xs tracking-widest uppercase mr-4 shrink-0"
+            >
+              {text}
+            </span>
+          ))}
+        </motion.div>
+      </div>
     </div>
   );
 }
@@ -118,7 +128,7 @@ export default function Services() {
         </span>
       </motion.div>
 
-      <div className="flex h-full">
+      <div className="flex h-[calc(100%-3rem)]">
         {/* --- Left: Fixed Sidebar Number --- */}
         <div className="w-[40%] lg:w-[35%] relative hidden md:flex flex-col items-center justify-center">
           {/* Large animated number */}
@@ -145,14 +155,14 @@ export default function Services() {
         {/* --- Right: Scrollable Content Panels --- */}
         <div
           ref={scrollRef}
-          className="w-full md:w-[60%] lg:w-[65%] h-full overflow-y-scroll hide-scrollbar relative"
+          className="w-full md:w-[60%] lg:w-[65%] h-full overflow-y-scroll hide-scrollbar"
           style={{ scrollSnapType: "y mandatory" }}
         >
           {services.map((service, index) => (
             <div
               key={service.number}
               ref={(el) => (panelRefs.current[index] = el)}
-              className="min-h-full flex items-center px-6 md:px-12 lg:px-14 py-28 scroll-snap-start"
+              className="h-screen flex items-center px-6 md:px-12 lg:px-14 py-28 scroll-snap-start shrink-0"
             >
               <div className="w-full max-w-2xl">
                 {/* Mobile: large number */}
@@ -215,11 +225,11 @@ export default function Services() {
               </div>
             </div>
           ))}
-
-          {/* Auto-scrolling marquee at bottom */}
-          <AutoMarquee />
         </div>
       </div>
+
+      {/* Auto-scrolling marquee — full width at bottom */}
+      <AutoMarquee />
 
       <style>{`
         .hide-scrollbar::-webkit-scrollbar { display: none; }

@@ -214,7 +214,7 @@ export default function Projects() {
 
       const newIndex = Math.max(
         0,
-        Math.min(Math.round(scrollFraction), projects.length - 1)
+        Math.min(Math.round(scrollFraction), projects.length - 1),
       );
       setActiveIndex(newIndex);
     };
@@ -247,7 +247,7 @@ export default function Projects() {
         transition={{ duration: 0.6, delay: 0.2 }}
         className="absolute top-0 left-0 right-0 px-6 md:px-12 py-6 z-30 pointer-events-none"
       >
-        <span className="text-orange font-mono text-sm tracking-widest">
+        <span className="text-[#B5E550] font-mono text-sm tracking-widest">
           // Projects
         </span>
       </motion.div>
